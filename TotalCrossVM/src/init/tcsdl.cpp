@@ -26,6 +26,10 @@ static SDL_Texture *texture;
  */
 bool TCSDL_Init(ScreenSurface screen, const char* title, bool fullScreen) {
   SDL_Window *window;
+
+  // lets debug
+  SDL_LogSetAllPriority(SDL_LOG_PRIORITY_VERBOSE);
+
   // Only init video (without audio)
   if(NOT_SUCCESS(SDL_Init(SDL_INIT_VIDEO))) {
     printf("SDL_Init failed: %s\n", SDL_GetError());
@@ -49,6 +53,8 @@ bool TCSDL_Init(ScreenSurface screen, const char* title, bool fullScreen) {
 
   // Adjust height on desktop, it should not affect fullscreen (y should be 0)
   viewport.h -= viewport.y;
+
+  printf("Viewport: %d %d %d %d\n", viewport.w, viewport.h, viewport.x, viewport.y);
 
   // Create the window
   if(IS_NULL(window = SDL_CreateWindow(
